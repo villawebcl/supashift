@@ -1,0 +1,46 @@
+#compdef supashift
+
+_supashift() {
+  local -a commands
+  commands=(
+    'init:Initialize config'
+    'profile:Manage profiles'
+    'run:Run command with profile'
+    'shell:Open isolated shell'
+    'tmux:Open tmux session'
+    'pick:Open interactive picker'
+    'doctor:Run diagnostics'
+    'export:Export config'
+    'import:Import config'
+    'migrate-from-supabase-cli:Migrate legacy Supabase token'
+    'use:Print eval snippet'
+    'unuse:Print unset snippet'
+    'auto:Suggest profile by project'
+    'project:Project mappings'
+    'reveal:Reveal token with confirmation'
+    'completions:Generate shell completions'
+    'snippet:Print shell snippets'
+  )
+
+  if (( CURRENT == 2 )); then
+    _describe 'command' commands
+    return
+  fi
+
+  case "$words[2]" in
+    profile)
+      _values 'profile action' add edit rm ls
+      ;;
+    project)
+      _values 'project action' bind ls
+      ;;
+    completions)
+      _values 'shell' zsh
+      ;;
+    snippet)
+      _values 'shell' zsh
+      ;;
+  esac
+}
+
+_supashift "$@"

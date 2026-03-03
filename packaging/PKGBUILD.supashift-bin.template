@@ -1,0 +1,24 @@
+# Maintainer: Your Name <you@example.com>
+
+pkgname=supashift-bin
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Manage multiple Supabase CLI profiles with isolated sessions"
+arch=('x86_64' 'aarch64')
+url="https://github.com/your-org/supashift"
+license=('MIT')
+depends=('glibc')
+optdepends=(
+  'supabase: run Supabase CLI commands'
+  'docker: local supabase start/status'
+  'tmux: multi-session terminal workflow'
+)
+source_x86_64=("$pkgname-$pkgver-x86_64.tar.gz::https://github.com/your-org/supashift/releases/download/v$pkgver/supashift_${pkgver}_linux_x86_64.tar.gz")
+source_aarch64=("$pkgname-$pkgver-aarch64.tar.gz::https://github.com/your-org/supashift/releases/download/v$pkgver/supashift_${pkgver}_linux_arm64.tar.gz")
+sha256sums_x86_64=('REPLACE_WITH_REAL_SHA256')
+sha256sums_aarch64=('REPLACE_WITH_REAL_SHA256')
+
+package() {
+  install -Dm755 "$srcdir/supashift" "$pkgdir/usr/bin/supashift"
+  install -Dm644 "$srcdir/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
