@@ -22,6 +22,11 @@ Se eligió Go por portabilidad real (Linux/macOS/Windows), binarios rápidos de 
 go build -o supashift ./cmd/supashift
 ```
 
+Instalación rápida (Linux/macOS):
+```bash
+curl -fsSL https://raw.githubusercontent.com/villawebcl/supashift/main/install.sh | bash
+```
+
 ## Quickstart
 ```bash
 supashift init
@@ -108,6 +113,7 @@ make build
 
 ## Documentación adicional
 - Guía de uso e instalación multi-PC: `docs/USO_Y_DISTRIBUCION.md`
+- Instalación universal: `docs/INSTALL.md`
 - Plantilla AUR (bin): `packaging/PKGBUILD.supashift-bin.template`
 
 ## Smoke test (criterios de aceptación)
