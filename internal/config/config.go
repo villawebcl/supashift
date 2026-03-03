@@ -11,7 +11,7 @@ import (
 
 	"github.com/pelletier/go-toml/v2"
 
-	"github.com/supashift/supashift/internal/model"
+	"github.com/villawebcl/supashift/internal/model"
 )
 
 const (

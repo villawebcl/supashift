@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_OWNER="supashift"
+REPO_OWNER="villawebcl"
 REPO_NAME="supashift"
 BIN_NAME="supashift"
 

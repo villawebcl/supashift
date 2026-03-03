@@ -39,7 +39,7 @@ paru -S supashift-bin
 
 ### Universal installer (Linux/macOS)
 ```bash
-curl -fsSL https://raw.githubusercontent.com/supashift/supashift/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/villawebcl/supashift/main/install.sh | bash
 ```
 
 ### Build from source

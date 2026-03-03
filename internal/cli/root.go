@@ -15,12 +15,12 @@ import (
 	"github.com/spf13/cobra"
 	"golang.org/x/term"
 
-	"github.com/supashift/supashift/internal/config"
-	"github.com/supashift/supashift/internal/integrations"
-	"github.com/supashift/supashift/internal/model"
-	"github.com/supashift/supashift/internal/runner"
-	"github.com/supashift/supashift/internal/tui"
-	"github.com/supashift/supashift/internal/vault"
+	"github.com/villawebcl/supashift/internal/config"
+	"github.com/villawebcl/supashift/internal/integrations"
+	"github.com/villawebcl/supashift/internal/model"
+	"github.com/villawebcl/supashift/internal/runner"
+	"github.com/villawebcl/supashift/internal/tui"
+	"github.com/villawebcl/supashift/internal/vault"
 )
 
 func Execute() error {

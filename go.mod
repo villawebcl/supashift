@@ -1,4 +1,4 @@
-module github.com/supashift/supashift
+module github.com/villawebcl/supashift
 
 go 1.22
 

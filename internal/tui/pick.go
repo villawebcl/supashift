@@ -8,7 +8,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	"github.com/supashift/supashift/internal/model"
+	"github.com/villawebcl/supashift/internal/model"
 )
 
 type item struct {

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/supashift/supashift/internal/cli"
+	"github.com/villawebcl/supashift/internal/cli"
 )
 
 func main() {

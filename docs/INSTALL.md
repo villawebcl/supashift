@@ -2,19 +2,19 @@
 
 ## Script universal (Linux/macOS)
 ```bash
-curl -fsSL https://raw.githubusercontent.com/supashift/supashift/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/villawebcl/supashift/main/install.sh | bash
 ```
 
 ## Opciones útiles
 ```bash
 # versión específica
-curl -fsSL https://raw.githubusercontent.com/supashift/supashift/main/install.sh | bash -s -- --version v0.1.2
+curl -fsSL https://raw.githubusercontent.com/villawebcl/supashift/main/install.sh | bash -s -- --version v0.1.2
 
 # instalar en /usr/local/bin
-curl -fsSL https://raw.githubusercontent.com/supashift/supashift/main/install.sh | bash -s -- --system
+curl -fsSL https://raw.githubusercontent.com/villawebcl/supashift/main/install.sh | bash -s -- --system
 
 # directorio custom
-curl -fsSL https://raw.githubusercontent.com/supashift/supashift/main/install.sh | bash -s -- --bin-dir "$HOME/bin"
+curl -fsSL https://raw.githubusercontent.com/villawebcl/supashift/main/install.sh | bash -s -- --bin-dir "$HOME/bin"
 ```
 
 El script:
