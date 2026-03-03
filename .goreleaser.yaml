@@ -7,7 +7,7 @@ before:
 
 builds:
   - id: supashift
-    main: ./cmd/supashift
+    main: ./cmd/supashift/main.go
     binary: supashift
     env:
       - CGO_ENABLED=0

@@ -21,8 +21,8 @@ SRCINFO="$AUR_DIR/.SRCINFO"
 CHECKSUMS_URL="https://github.com/${OWNER}/${REPO}/releases/download/v${VERSION}/checksums.txt"
 CHECKSUMS="$(curl -fsSL "$CHECKSUMS_URL")"
 
-X86_FILE="supashift_v${VERSION}_linux_x86_64.tar.gz"
-ARM_FILE="supashift_v${VERSION}_linux_arm64.tar.gz"
+X86_FILE="supashift_${VERSION}_linux_x86_64.tar.gz"
+ARM_FILE="supashift_${VERSION}_linux_arm64.tar.gz"
 
 SHA_X86="$(awk -v f="$X86_FILE" '$2==f{print $1}' <<<"$CHECKSUMS")"
 SHA_ARM="$(awk -v f="$ARM_FILE" '$2==f{print $1}' <<<"$CHECKSUMS")"
