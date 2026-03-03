@@ -1,4 +1,4 @@
-supashift
+/supashift
 *.out
 supabase/.branches/
 supabase/.temp/
