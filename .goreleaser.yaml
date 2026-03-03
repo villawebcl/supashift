@@ -1,0 +1,35 @@
+version: 2
+project_name: supashift
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: supashift
+    main: ./cmd/supashift
+    binary: supashift
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+
+archives:
+  - id: default
+    formats: [tar.gz]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ if eq .Arch \"amd64\" }}x86_64{{ else }}arm64{{ end }}"
+    files:
+      - README.md
+      - LICENSE
+      - completions/zsh/_supashift
+
+checksum:
+  name_template: checksums.txt
+
+changelog:
+  use: git
