@@ -13,8 +13,8 @@ optdepends=(
   'docker: local supabase start/status'
   'tmux: multi-session workflow'
 )
-source_x86_64=("$pkgname-$pkgver-x86_64.tar.gz::https://github.com/{{GITHUB_OWNER}}/{{GITHUB_REPO}}/releases/download/v$pkgver/supashift_$pkgver_linux_x86_64.tar.gz")
-source_aarch64=("$pkgname-$pkgver-aarch64.tar.gz::https://github.com/{{GITHUB_OWNER}}/{{GITHUB_REPO}}/releases/download/v$pkgver/supashift_$pkgver_linux_arm64.tar.gz")
+source_x86_64=("$pkgname-$pkgver-x86_64.tar.gz::https://github.com/{{GITHUB_OWNER}}/{{GITHUB_REPO}}/releases/download/v${pkgver}/supashift_${pkgver}_linux_x86_64.tar.gz")
+source_aarch64=("$pkgname-$pkgver-aarch64.tar.gz::https://github.com/{{GITHUB_OWNER}}/{{GITHUB_REPO}}/releases/download/v${pkgver}/supashift_${pkgver}_linux_arm64.tar.gz")
 sha256sums_x86_64=('{{SHA_X86_64}}')
 sha256sums_aarch64=('{{SHA_AARCH64}}')
 
