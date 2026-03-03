@@ -1,66 +1,74 @@
 # supashift
 
-Terminal tool PRO para manejar múltiples perfiles/cuentas de Supabase CLI sin login/logout global.
+Manage multiple Supabase CLI accounts/profiles with zero login/logout friction.
 
-## Por qué Go
-Se eligió Go por portabilidad real (Linux/macOS/Windows), binarios rápidos de distribuir y muy buen ecosistema para CLI/TUI (`cobra` + `bubbletea`).
+`supashift` isolates `SUPABASE_ACCESS_TOKEN` per command/session, so you can work across clients/projects safely without touching the global Supabase CLI token state.
 
-## Features
-- Perfiles múltiples: nombre, account label, notas, tags, aliases, favoritos.
-- Vault seguro con prioridad keyring del SO y fallback cifrado (`age` + passphrase).
-- Ejecución aislada por perfil:
-  - `supashift run <profile> -- <cmd ...>`
+## Why
+Working with multiple Supabase accounts is painful when switching auth context repeatedly.
+
+`supashift` solves this by:
+- Storing one token per profile (secure vault backend).
+- Running commands with profile-scoped environment injection.
+- Keeping sessions isolated (`run`, `shell`, `tmux`, `use/unuse`).
+
+## Key Features
+- Multi-profile management: name, account label, notes, tags, aliases, favorites.
+- Secure vault:
+  - Primary: OS keyring (Secret Service/Keychain/Credential Manager).
+  - Fallback: local encrypted file (`age` + passphrase).
+- Isolated execution:
+  - `supashift run <profile> -- <cmd...>`
   - `supashift shell <profile>`
   - `supashift tmux <profile>`
-- Selector rápido `supashift pick` con búsqueda incremental.
-- `use/unuse` para `eval` en shell actual.
-- Integración de proyecto: detecta Supabase repo y mapping carpeta->perfil.
-- `doctor` para diagnóstico de entorno y seguridad.
+- Fast UX:
+  - Interactive picker `supashift pick`.
+  - `use/unuse` snippets for current shell.
+- Project integration:
+  - Detect Supabase project directories.
+  - Folder-to-profile mapping.
 
-## Instalación
+## Installation
+
+### Arch Linux (AUR)
 ```bash
-go build -o supashift ./cmd/supashift
+yay -S supashift-bin
+# or
+paru -S supashift-bin
 ```
 
-Instalación rápida (Linux/macOS):
+### Universal installer (Linux/macOS)
 ```bash
 curl -fsSL https://raw.githubusercontent.com/villawebcl/supashift/main/install.sh | bash
+```
+
+### Build from source
+```bash
+go mod tidy
+go build -o supashift ./cmd/supashift
 ```
 
 ## Quickstart
 ```bash
 supashift init
-supashift profile add anagami-prod --account "Anagami Production" --tags cliente,prod --aliases anagami,anagami-prod
-supashift profile add anagami-dev --account "Anagami Dev" --tags cliente,dev --aliases anagami-dev
+
+# Add profiles (token prompt is hidden)
+supashift profile add cvv-gmail --account "cristianvillalobosvv@gmail.com"
+supashift profile add cvv-outlook --account "cristianvillalobosv@outlook.com"
+
+# List profiles
 supashift profile ls
 
-# Ejecutar comando aislado
-supashift run anagami-prod -- supabase status
+# Run with isolated account token
+supashift run cvv-gmail -- supabase projects list
 
-# Abrir subshell aislado
-supashift shell anagami-prod
-
-# tmux aislado
-supashift tmux anagami-prod
-
-# Inyectar en shell actual
-eval "$(supashift use anagami-prod)"
-# limpiar
+# Optional: activate in current shell
+eval "$(supashift use cvv-gmail)"
+supabase projects list
 eval "$(supashift unuse)"
 ```
 
-## Seguridad
-- Nunca usa ni modifica `~/.supabase/access-token`.
-- Inyecta `SUPABASE_ACCESS_TOKEN` solo en el proceso/sesión objetivo.
-- Tokens no se imprimen, salvo `supashift reveal <profile>` con confirmación `YES`.
-- `export` no incluye secretos por defecto; requiere `--include-secrets`.
-- Recomendación zsh para history:
-```zsh
-setopt HIST_IGNORE_SPACE
-# luego ejecuta comandos sensibles con prefijo de espacio
-```
-
-## Comandos
+## Core Commands
 - `supashift init`
 - `supashift profile add|edit|rm|ls`
 - `supashift run <profile> -- <command>`
@@ -76,56 +84,30 @@ setopt HIST_IGNORE_SPACE
 - `supashift project bind <profile>` / `supashift project ls`
 - `supashift reveal <profile>`
 
-## Config
-Ubicación (XDG):
-- Linux/macOS: `${XDG_CONFIG_HOME:-~/.config}/supashift/config.toml`
-
-Estructura general:
-- `profiles` metadata (sin token)
-- `project_mappings`
-- `recents`
-- `vault_backend = auto|keyring|file`
-
-## Import/Export
-```bash
-# sin secretos (default)
-supashift export -o backup.toml
-
-# con secretos explícitamente
-supashift export --include-secrets -o backup-secrets.toml
-
-supashift import -i backup.toml
+## Security Notes
+- Does **not** modify `~/.supabase/access-token`.
+- Injects `SUPABASE_ACCESS_TOKEN` only into target process/session.
+- Never prints token unless explicitly requested with `reveal` + confirmation.
+- `export` excludes secrets by default.
+- Recommended for zsh history hygiene:
+```zsh
+setopt HIST_IGNORE_SPACE
 ```
 
-## Integración zsh
-```bash
-supashift snippet zsh
-supashift completions zsh > ~/.zsh/completions/_supashift
-```
+## Docs
+- Usage and distribution: `docs/USO_Y_DISTRIBUCION.md`
+- Universal install details: `docs/INSTALL.md`
+- AUR release flow: `docs/AUR_RELEASE.md`
+- Security model: `SECURITY.md`
 
-## Desarrollo
+## Development
 ```bash
 make fmt
 make lint
 make test
 make build
+make smoke
 ```
 
-## Documentación adicional
-- Guía de uso e instalación multi-PC: `docs/USO_Y_DISTRIBUCION.md`
-- Instalación universal: `docs/INSTALL.md`
-- Plantilla AUR (bin): `packaging/PKGBUILD.supashift-bin.template`
-
-## Smoke test (criterios de aceptación)
-```bash
-./scripts/smoke.sh ./supashift
-```
-Valida:
-- 3 perfiles operando en paralelo por `run` con token aislado.
-- No modificación de `~/.supabase/access-token`.
-- `use/unuse`, `doctor` y migración desde token legacy.
-- Sesiones tmux simultáneas (si `tmux` está instalado).
-
-## Rendimiento
-- `pick` carga perfiles en memoria y filtra incrementalmente.
-- `run` agrega overhead mínimo (inyección env + spawn del comando).
+## License
+MIT

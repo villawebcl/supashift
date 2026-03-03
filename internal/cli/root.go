@@ -31,6 +31,9 @@ func newRootCmd() *cobra.Command {
 	root := &cobra.Command{
 		Use:   "supashift",
 		Short: "Gestiona perfiles Supabase CLI con sesiones aisladas",
+		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+			return showFirstRunBanner()
+		},
 	}
 
 	root.AddCommand(newInitCmd())
@@ -52,6 +55,40 @@ func newRootCmd() *cobra.Command {
 	root.AddCommand(newSnippetCmd())
 
 	return root
+}
+
+func showFirstRunBanner() error {
+	if os.Getenv("SUPASHIFT_NO_BANNER") == "1" {
+		return nil
+	}
+	if !term.IsTerminal(int(os.Stdout.Fd())) {
+		return nil
+	}
+	dir, err := config.EnsureDirs()
+	if err != nil {
+		return nil
+	}
+	marker := filepath.Join(dir, ".welcome_seen")
+	if _, err := os.Stat(marker); err == nil {
+		return nil
+	}
+	banner := `
+  ____                        _     _  __ _
+ / ___| _   _ _ __   __ _ ___| |__ (_)/ _| |_
+ \___ \| | | | '_ \ / _` + "`" + ` / __| '_ \| | |_| __|
+  ___) | |_| | |_) | (_| \__ \ | | | |  _| |_
+ |____/ \__,_| .__/ \__,_|___/_| |_|_|_|  \__|
+             |_|
+
+supashift: perfiles Supabase aislados por sesión.
+quickstart:
+  supashift init
+  supashift profile add <perfil> --account "<correo>"
+  supashift run <perfil> -- supabase projects list
+`
+	_, _ = io.WriteString(os.Stderr, banner)
+	_ = os.WriteFile(marker, []byte("seen\n"), 0o600)
+	return nil
 }
 
 func loadCfgVault() (*model.Config, *vault.Manager, error) {
