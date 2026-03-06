@@ -68,21 +68,37 @@ supabase projects list
 eval "$(supashift unuse)"
 ```
 
-## Core Commands
-- `supashift init`
-- `supashift profile add|edit|rm|ls`
-- `supashift run <profile> -- <command>`
-- `supashift shell <profile>`
-- `supashift tmux <profile> [--many]`
-- `supashift pick`
-- `supashift doctor`
-- `supashift export [--include-secrets]`
-- `supashift import --input file.toml`
-- `supashift migrate-from-supabase-cli <profile> [--source auto|file|env|stdin]`
-- `supashift use <profile>` / `supashift unuse`
-- `supashift auto [--set]`
-- `supashift project bind <profile>` / `supashift project ls`
-- `supashift reveal <profile>`
+## Commands (EN / ES)
+
+### EN
+- `supashift init`: initialize Supashift config.
+- `supashift profile add|edit|rm|ls`: create, edit, remove, list profiles.
+- `supashift run <profile> -- <command>`: run one command with isolated token.
+- `supashift shell <profile>`: open a shell with active profile.
+- `supashift tmux <profile> [--many]`: create/attach tmux session(s) per profile.
+- `supashift pick`: interactive profile picker.
+- `supashift use <profile>` / `supashift unuse`: activate/clear profile in current shell.
+- `supashift doctor`: check environment health.
+- `supashift export [--include-secrets]` / `supashift import --input file.toml`: backup/restore config.
+- `supashift migrate-from-supabase-cli <profile> [--source auto|file|env|stdin]`: import legacy token.
+- `supashift auto [--set]`: suggest profile from current project path.
+- `supashift project bind <profile>` / `supashift project ls`: map project folders to profiles.
+- `supashift reveal <profile>`: reveal profile token (sensitive).
+
+### ES
+- `supashift init`: inicia la configuracion de Supashift.
+- `supashift profile add|edit|rm|ls`: crea, edita, elimina y lista perfiles.
+- `supashift run <perfil> -- <comando>`: ejecuta un comando con token aislado.
+- `supashift shell <perfil>`: abre una shell con el perfil activo.
+- `supashift tmux <perfil> [--many]`: crea/adjunta sesion(es) tmux por perfil.
+- `supashift pick`: selector interactivo de perfiles.
+- `supashift use <perfil>` / `supashift unuse`: activa/limpia perfil en la shell actual.
+- `supashift doctor`: revisa el estado del entorno.
+- `supashift export [--include-secrets]` / `supashift import --input file.toml`: respaldo/restauracion de configuracion.
+- `supashift migrate-from-supabase-cli <perfil> [--source auto|file|env|stdin]`: importa token legacy.
+- `supashift auto [--set]`: sugiere perfil segun la carpeta actual.
+- `supashift project bind <perfil>` / `supashift project ls`: vincula carpetas de proyecto a perfiles.
+- `supashift reveal <perfil>`: muestra token del perfil (sensible).
 
 ## Security Notes
 - Does **not** modify `~/.supabase/access-token`.
